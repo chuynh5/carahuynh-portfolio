@@ -202,6 +202,8 @@ body.v-home .pc:nth-child(odd){scroll-snap-align:start;scroll-snap-stop:always;s
 .cs article h2,.cs article h3{font-weight:600;color:var(--ink)}
 .now{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 20px!important;max-width:420px!important}.nrow{align-items:flex-start;gap:10px}.nrow img{width:52px;height:44px}.nrow span{font-size:14.5px}
 #profile{padding-bottom:12px!important}#aboutme{padding-top:12px!important}
+.mpop{position:fixed;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 16px 40px color-mix(in srgb,var(--ink) 18%,transparent);opacity:0;pointer-events:none;transform:translateY(-4px);transition:opacity .2s,transform .2s}.mpop.on{opacity:1;pointer-events:auto;transform:none}
+.mpop .maddr{font-size:16px;margin:4px 0 12px;word-break:break-all}.mpop .mbtns{display:flex;flex-wrap:wrap;gap:8px}.mpop .mbtns>*{font:inherit;font-size:13px;font-weight:500;margin:0;padding:7px 12px;border-radius:99px;border:1px solid var(--ink);background:transparent;color:var(--ink);text-decoration:none;cursor:pointer}.mpop .mbtns>*:hover{background:var(--ink);color:var(--bg)}
 </style>
 </head>
 <body>
@@ -411,6 +413,20 @@ document.querySelectorAll('#art video[data-v]').forEach(function(v){if(!v.src)v.
    if('IntersectionObserver' in window)new IntersectionObserver(function(es){o.vis=es[0].isIntersecting}).observe(c)};
   src.src=K[k];im.replaceWith(c)});
  if(!rm)requestAnimationFrame(function loop(ts){var t=ts/1000;if(!document.hidden)L.forEach(function(o){if(o.vis&&o.k!=='pair'&&!o.st)draw(o,t)});requestAnimationFrame(loop)})})();
+
+(function(){var E='ckayhuynh@gmail.com',pop=document.createElement('div');pop.className='mpop';pop.setAttribute('role','dialog');pop.setAttribute('aria-label','Contact Cara');
+ pop.innerHTML='<div class="px">email me</div><div class="maddr">'+E+'</div><div class="mbtns"><button type="button" data-a="copy">Copy email</button><a href="https://mail.google.com/mail/?view=cm&fs=1&to='+E+'&su=Hello%20Cara" target="_blank" rel="noopener noreferrer">Open Gmail</a><a href="mailto:'+E+'?subject=Hello%20Cara">Mail app</a></div>';
+ document.body.appendChild(pop);
+ function close(){pop.classList.remove('on')}
+ function open(a){var r=a.getBoundingClientRect(),w=Math.min(300,innerWidth-24);pop.style.width=w+'px';pop.style.left=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2))+'px';
+  var top=r.bottom+10;if(top+170>innerHeight)top=Math.max(12,r.top-170);pop.style.top=top+'px';pop.classList.add('on')}
+ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="mailto:"]');
+  if(a&&!pop.contains(a)){e.preventDefault();e.stopPropagation();document.getElementById('nav').classList.remove('open');open(a);return}
+  var b=e.target.closest&&e.target.closest('.mpop button[data-a="copy"]');
+  if(b){var done=function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy email'},1600)};
+   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(E).then(done,function(){prompt('Copy this email:',E)});else prompt('Copy this email:',E);return}
+  if(!pop.contains(e.target))close()},true);
+ addEventListener('keydown',function(e){if(e.key==='Escape')close()});addEventListener('scroll',close,{passive:true})})();
 </script>
 </body>
 </html>
