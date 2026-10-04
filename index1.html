@@ -208,6 +208,8 @@ body.v-home .pc:nth-child(odd){scroll-snap-align:start;scroll-snap-stop:always;s
 .pc .go{font-size:10px!important;padding:6px 14px!important;letter-spacing:.14em!important;border-width:1px}
 .pc .chip{font-size:9.5px!important;padding:3px 10px!important}.pc-top .px{font-size:10px}
 .pc .pcm{height:56%!important;max-width:48%!important;right:4%!important;bottom:12%!important}}
+@media(max-width:760px){.pc h3 span{display:block}.pc h3{font-size:clamp(20px,5.6vw,25px)!important;line-height:1.05!important;max-width:50%!important}
+.pc .go{font-size:8.5px!important;padding:5px 11px!important;letter-spacing:.12em!important}}
 </style>
 </head>
 <body>
@@ -329,7 +331,7 @@ var PV={actingglobally:'nonprofit site',statefarm:'payment flow',tbtogether:'jou
 var RH=P.map(function(p){return '<a class="row" href="#/work/'+p.id+'"><div class="t t-'+p.id+(p.id==='venmovenez'?' cover':'')+'"><img class="mk" data-k="cs_'+p.id+'" alt="" aria-hidden="true"></div><div><h3>'+p.n+'</h3><p>'+p.tl+'. '+p.d+'</p></div><span class="tag px">'+p.tag+'</span></a>'}).join('');
 
 document.getElementById('deck').innerHTML=P.slice(0,4).map(function(p,i){return '<a class="dk" href="#/work/'+p.id+'"><div class="dk-m t-'+p.id+(p.id==='venmovenez'?' cover':'')+'"><span class="px">0'+(i+1)+'</span><img class="mk" data-k="cs_'+p.id+'" alt="" aria-hidden="true"></div><div class="dk-b"><span class="chip px">'+p.tag+'</span><h3>'+p.n+'</h3></div>'+(p.hv?'<div class="hvw t-'+p.id+'"><video class="hv '+(p.hva&&eval(p.hva)<1?'port':'land')+(p.hm?' mask-'+p.hm:'')+'" data-v="'+p.hv+'" style="aspect-ratio:'+(p.hva||'16/9')+'" muted loop playsinline preload="none" aria-hidden="true"></video></div>':'')+'</a>'}).join('');
-document.getElementById('reel').innerHTML=P.slice(0,4).map(function(p,i){return '<a class="pc t-'+p.id+'" href="#/work/'+p.id+'"><img class="pcm'+(p.id==='venmovenez'?' cover':'')+'" data-k="cs_'+p.id+'" alt="" aria-hidden="true"><div class="pc-body"><div class="pc-top"><span class="px">0'+(i+1)+'</span><span class="chip px">'+p.tag+'</span></div><div><h3>'+p.n+'</h3><p>'+p.tl+'</p><span class="go px">View case study &nbsp;→</span></div></div></a>'}).join('');
+document.getElementById('reel').innerHTML=P.slice(0,4).map(function(p,i){return '<a class="pc t-'+p.id+'" href="#/work/'+p.id+'"><img class="pcm'+(p.id==='venmovenez'?' cover':'')+'" data-k="cs_'+p.id+'" alt="" aria-hidden="true"><div class="pc-body"><div class="pc-top"><span class="px">0'+(i+1)+'</span><span class="chip px">'+p.tag+'</span></div><div><h3>'+p.n.split(' ').map(function(w){return '<span>'+w+'</span>'}).join(' ')+'</h3><p>'+p.tl+'</p><span class="go px">View case study &nbsp;→</span></div></div></a>'}).join('');
 function render(p){return '<span class="chip px">'+p.tag+'</span><h1>'+p.h+'</h1><p class="lede">'+p.intro+'</p>'+
 '<div class="meta">'+p.meta.map(function(m){return '<div><b>'+m[0]+'</b>'+m[1]+'</div>'}).join('')+'</div>'+(p.tldr?'<div class="tldr"><i class="px">TL;DR</i><p>'+p.tldr+'</p></div>':'')+'<div class="cs-hero t-'+p.id+(p.id==='venmovenez'?' cover':'')+'"><img class="mk" data-k="cs_'+p.id+'" alt="'+p.n+' project mockups"></div>'+
 p.secs.map(function(x,i){return '<section id="s'+i+'"><h2>'+x[0]+'</h2>'+x[1]+'</section>'}).join('')}
