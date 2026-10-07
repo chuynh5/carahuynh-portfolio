@@ -196,7 +196,7 @@ body.v-home .pc:nth-child(odd){scroll-snap-align:start;scroll-snap-stop:always;s
 .mask-sf{-webkit-mask-image:url(assets/inline-0e43455c.png);mask-image:url(assets/inline-0e43455c.png)}.mask-tbt{-webkit-mask-image:url(assets/inline-d203548e.png);mask-image:url(assets/inline-d203548e.png)}
 .mask-sf,.mask-tbt{-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;border-radius:0!important;background:transparent!important}
 .hvw video.hv.port.mask-sf,.hvw video.hv.port.mask-tbt{filter:drop-shadow(0 10px 18px rgba(40,30,20,.18))}
-#stageMore{display:none!important}.hvw video.hv{image-rendering:auto}
+.hvw video.hv{image-rendering:auto}
 .hvw video.hv.land{width:80%!important;margin:0 auto}.hvw:has(video.land){justify-content:center}.cs article h3{font-size:clamp(20px,1.8vw,24px);margin:26px 0 8px}
 .hvw:has(video.land){align-items:center!important;padding-top:6%!important}
 .cs article h2,.cs article h3{font-weight:600;color:var(--ink)}
@@ -243,6 +243,13 @@ body.v-home .pc:nth-child(odd){scroll-snap-align:start;scroll-snap-stop:always;s
 .dk .chip .ts{display:none}
 @container (max-width:360px){.dk .chip.hs .tl{display:none}.dk .chip.hs .ts{display:inline}}
 @container (max-width:250px){.dk-b .chip{font-size:12px;padding:2px 10px}}
+/* "See all work" pill under the homepage deck, and the all-work page */
+#stageMore{display:inline-block;border:1px solid var(--ink);border-radius:99px;padding:8px 24px;color:var(--ink);text-decoration:none;white-space:nowrap}
+#stageMore:hover{background:var(--ink);color:var(--bg)}
+#stageMore[hidden]{display:none}
+#workpg section{padding-top:56px}
+#allRows{margin-top:28px}
+.links a.on{color:var(--coral)}
 </style>
 </head>
 <body>
@@ -261,7 +268,7 @@ body.v-home .pc:nth-child(odd){scroll-snap-align:start;scroll-snap-stop:always;s
 
 
 <section id="workM" class="reel"><div class="reel-top px"><span>Selected work</span><span>01 — 04</span></div><div id="reel"></div></section>
-<section id="work" class="stage"><div class="stage-in" id="stageIn"><img class="stw" data-k="sw2" alt="" aria-hidden="true"><div class="stage-lab px" id="stageLab">Selected work</div><div id="deck"></div><a class="more" id="stageMore" hidden></a></div></section>
+<section id="work" class="stage"><div class="stage-in" id="stageIn"><img class="stw" data-k="sw2" alt="" aria-hidden="true"><div class="stage-lab px" id="stageLab">Selected work</div><div id="deck"></div><a class="more px" id="stageMore" href="#/allwork" hidden>See all work &nbsp;→</a></div></section>
 
 <section id="experience"><div class="sea"></div><div class="wrap two"><img class="deco hide-m" data-k="leaves" alt="" aria-hidden="true" style="right:20px;top:-30px;width:200px;opacity:0.85"><img class="deco hide-m" data-k="sw2" alt="" aria-hidden="true" style="left:-60px;bottom:-60px;width:340px;opacity:0.5">
  
@@ -276,6 +283,10 @@ body.v-home .pc:nth-child(odd){scroll-snap-align:start;scroll-snap-stop:always;s
 </div></section>
 
 </div>
+<div class="pg" id="workpg"><section><div class="wrap">
+ <div class="px">work</div><h1 class="ph1">All work</h1>
+ <div id="allRows"></div>
+</div></section></div>
 <div class="pg" id="aboutpg">
 <section id="profile"><div class="wrap"><div class="two"><div><div class="pic"><img data-k="me" alt="Cara on a riverside promenade with a city skyline behind her"></div><div class="now"><div class="nrow"><img data-k="cur_reading" alt="" aria-hidden="true"><div><i class="px">reading</i><span>Looking for my next read</span></div></div><div class="nrow"><img data-k="cur_learning" alt="" aria-hidden="true"><div><i class="px">learning</i><span>Engineering Management at Northeastern</span></div></div><div class="nrow"><img data-k="cur_listening" alt="" aria-hidden="true"><div><i class="px">listening to</i><span>CORTIS &amp; BTS</span></div></div><div class="nrow"><img data-k="cur_craving" alt="" aria-hidden="true"><div><i class="px">craving</i><span>Iced matcha</span></div></div></div></div>
   <div><h2>Cara 𐙚⋆°｡⋆♡</h2><p>A little more about me outside of design and product work.</p>
@@ -374,16 +385,18 @@ var SKG=[['Product & Program','#7F9C70',['Product Strategy','Product Requirement
 document.getElementById('skills').innerHTML=SKG.map(function(g){return '<div class="sg"><div class="px sgh"><i style="background:'+g[1]+'"></i>'+g[0].replace('&','&amp;')+'</div><div class="skills">'+g[2].map(function(x){return '<span class="chip">'+x+'</span>'}).join('')+'</div></div>'}).join('');
 var PV={actingglobally:'nonprofit site',statefarm:'payment flow',tbtogether:'journal app',tealwaters:'data map',venmovenez:'localized app'};
 var RH=P.map(function(p){return '<a class="row" href="#/work/'+p.id+'"><div class="t t-'+p.id+(p.id==='venmovenez'?' cover':'')+'"><img class="mk" data-k="cs_'+p.id+'" alt="" aria-hidden="true"></div><div><h3>'+p.n+'</h3><p>'+p.tl+'. '+p.d+'</p></div><span class="tag px">'+p.tag+'</span></a>'}).join('');
+document.getElementById('allRows').innerHTML=RH;
+if(P.length>4)document.getElementById('stageMore').hidden=false;
 
-document.getElementById('deck').innerHTML=P.slice(0,5).map(function(p,i){return '<a class="dk" href="#/work/'+p.id+'"><div class="dk-m t-'+p.id+(p.id==='venmovenez'?' cover':'')+'"><span class="px">0'+(i+1)+'</span><img class="mk" data-k="cs_'+p.id+'" alt="" aria-hidden="true"></div><div class="dk-b"><span class="chip px'+(p.tagS?' hs':'')+'"><span class="tl">'+p.tag+'</span>'+(p.tagS?'<span class="ts">'+p.tagS+'</span>':'')+'</span><h3>'+p.n+'</h3></div>'+(p.hv?'<div class="hvw t-'+p.id+'"><video class="hv '+(p.hva&&eval(p.hva)<1?'port':'land')+(p.hm?' mask-'+p.hm:'')+'" data-v="'+p.hv+'" style="aspect-ratio:'+(p.hva||'16/9')+'" muted loop playsinline preload="none" aria-hidden="true"></video></div>':'')+'</a>'}).join('');
+document.getElementById('deck').innerHTML=P.slice(0,4).map(function(p,i){return '<a class="dk" href="#/work/'+p.id+'"><div class="dk-m t-'+p.id+(p.id==='venmovenez'?' cover':'')+'"><span class="px">0'+(i+1)+'</span><img class="mk" data-k="cs_'+p.id+'" alt="" aria-hidden="true"></div><div class="dk-b"><span class="chip px'+(p.tagS?' hs':'')+'"><span class="tl">'+p.tag+'</span>'+(p.tagS?'<span class="ts">'+p.tagS+'</span>':'')+'</span><h3>'+p.n+'</h3></div>'+(p.hv?'<div class="hvw t-'+p.id+'"><video class="hv '+(p.hva&&eval(p.hva)<1?'port':'land')+(p.hm?' mask-'+p.hm:'')+'" data-v="'+p.hv+'" style="aspect-ratio:'+(p.hva||'16/9')+'" muted loop playsinline preload="none" aria-hidden="true"></video></div>':'')+'</a>'}).join('');
 document.getElementById('reel').innerHTML=P.slice(0,5).map(function(p,i){return '<a class="pc t-'+p.id+'" href="#/work/'+p.id+'"><img class="pcm'+(p.id==='venmovenez'?' cover':'')+'" data-k="cs_'+p.id+'" alt="" aria-hidden="true"><div class="pc-body"><div class="pc-top"><span class="px">0'+(i+1)+'</span><span class="chip px'+(p.tagS?' hs':'')+'"><span class="tl">'+p.tag+'</span>'+(p.tagS?'<span class="ts">'+p.tagS+'</span>':'')+'</span></div><div><h3>'+p.n.split(' ').map(function(w){return '<span>'+w+'</span>'}).join(' ')+'</h3><p>'+p.tl+'</p><span class="go px">View case study &nbsp;→</span></div></div></a>'}).join('');
 function render(p){return '<span class="chip px">'+p.tag+'</span><h1>'+p.h+'</h1><p class="lede">'+p.intro+'</p>'+
 '<div class="meta">'+p.meta.map(function(m){return '<div><b>'+m[0]+'</b>'+m[1]+'</div>'}).join('')+'</div>'+(p.tldr?'<div class="tldr"><i class="px">TL;DR</i><p>'+p.tldr+'</p></div>':'')+'<div class="cs-hero t-'+p.id+(p.id==='venmovenez'?' cover':'')+'"><img class="mk" data-k="cs_'+p.id+'" alt="'+p.n+' project mockups"></div>'+
 p.secs.map(function(x,i){return '<section id="s'+i+'"><h2>'+x[0]+'</h2>'+x[1]+'</section>'}).join('')}
 function toc(p){document.getElementById('toc').innerHTML='<a class="toc-back" href="#/featured">← All Work</a>'+p.secs.map(function(x,i){return '<a href="#s'+i+'" onclick="event.preventDefault();document.getElementById(\'s'+i+'\').scrollIntoView()">'+x[0]+'</a>'}).join('')}
 function tg(){var n=document.getElementById('nav'),o=n.classList.toggle('open');n.querySelector('.burger').setAttribute('aria-expanded',o)}
-function route(){if(location.hash==='#/work'){location.replace('#/featured');return}document.getElementById('nav').classList.remove('open');var h=location.hash,m=h.match(/^#\/work\/(.+)/),p=m&&P.filter(function(x){return x.id===m[1]})[0],v=p?'case':h==='#/work'?'work':(h==='#/about'||h==='#/profile'||h==='#/aboutme'||h==='#/howiwork')?'about':h==='#/places'?'places':'home';
- document.body.className='v-'+v;var DI=(v==='work'||v==='case')?0:v==='places'?1:v==='about'?2:-1;document.querySelectorAll('.dock a').forEach(function(a,i){a.classList.toggle('on',i===DI);if(i===DI)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});var T={work:'Work',about:'About',places:'Places'};
+function route(){if(location.hash==='#/work'){location.replace('#/featured');return}document.getElementById('nav').classList.remove('open');var h=location.hash,m=h.match(/^#\/work\/(.+)/),p=m&&P.filter(function(x){return x.id===m[1]})[0],v=p?'case':h==='#/allwork'?'work':(h==='#/about'||h==='#/profile'||h==='#/aboutme'||h==='#/howiwork')?'about':h==='#/places'?'places':'home';
+ document.body.className='v-'+v;var DI=(v==='work'||v==='case')?0:v==='places'?1:v==='about'?2:-1;document.querySelectorAll('.dock a').forEach(function(a,i){a.classList.toggle('on',i===DI);if(i===DI)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});document.querySelectorAll('#nav .links .mo').forEach(function(a){var on=a.getAttribute('href')==='#/featured'?DI===0:a.getAttribute('href')==='#/'+v;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});var T={work:'Work',about:'About',places:'Places'};
  if(p){document.getElementById('art').innerHTML=render(p);if(typeof K!=='undefined'){document.querySelectorAll('#art img[data-k]').forEach(function(i){i.src=K[i.dataset.k]});document.querySelectorAll('#art video[data-v]').forEach(function(v){v.src=K[v.dataset.v]})}toc(p);document.title=p.n+' | Cara Huynh'}else document.title=(T[v]?T[v]+' | ':'')+'Cara Huynh';
  if(h==='#/aboutme'){setTimeout(sa,60);return}
  if(h==='#/howiwork'){setTimeout(function(){var t=document.getElementById('howiwork');if(t)t.scrollIntoView({behavior:'smooth'})},60);return}
@@ -393,10 +406,10 @@ addEventListener('hashchange',route);route();
 var DL={},SO=[[-14,6,-9],[10,-8,6],[-6,10,-5],[14,4,8]];
 function dockH(){var d=document.querySelector('.dock');if(!d||getComputedStyle(d).display==='none')return 16;return d.offsetHeight+parseFloat(getComputedStyle(d).bottom)+14}
 function deckLayout(){var inn=document.getElementById('stageIn'),st=document.getElementById('work');if(!inn||inn.offsetParent===null)return;var IW=inn.clientWidth,VH=innerHeight-59;if(!IW||(DL.w===IW&&DL.h===VH))return;DL={w:IW,h:VH};
- var cards=inn.querySelectorAll('.dk'),n=cards.length,cols=n>4?3:2,g=22,dk=dockH(),CW=Math.min(1440,IW*.92)-48,cx=IW/2,lab=document.getElementById('stageLab'),mo=document.getElementById('stageMore'),w,h,top,SH=VH;
+ var cards=inn.querySelectorAll('.dk'),n=cards.length,cols=n>4?3:2,g=22,dk=dockH(),CW=Math.min(1440,IW*.92)-48,cx=IW/2,lab=document.getElementById('stageLab'),mo=document.getElementById('stageMore'),ML=mo.hidden?0:48,w,h,top,SH=VH;
  if(IW>=1200){w=(CW-(cols-1)*g)/cols;h=w*.74;top=64;SH=top+2*h+g+40+dk;lab.style.cssText='left:'+(cx-CW/2)+'px;right:auto;top:'+(top-38)+'px;text-align:left';mo.style.left=(cx-CW/2)+'px';mo.style.top=(top+2*h+g+20)+'px'}
- else{g=18;h=Math.min((VH-24-dk-g)/2,(CW-(cols-1)*g)/cols);var GW=cols*h+(cols-1)*g,GH=2*h+g,side=(IW-GW)/2;
-  if(side>=200){top=Math.max(12,(VH-dk-GH)/2+6);lab.style.cssText='left:auto;right:'+(IW-(cx-GW/2)+24)+'px;top:'+top+'px;text-align:right';mo.style.left=(cx+GW/2+24)+'px';mo.style.top=(top+GH-44)+'px'}
+ else{g=18;h=Math.min((VH-24-dk-g-ML)/2,(CW-(cols-1)*g)/cols);var GW=cols*h+(cols-1)*g,GH=2*h+g,side=(IW-GW)/2;
+  if(side>=200){top=Math.max(12,(VH-dk-GH-ML)/2+6);lab.style.cssText='left:auto;right:'+(IW-(cx-GW/2)+24)+'px;top:'+top+'px;text-align:right';mo.style.left=(cx-GW/2)+'px';mo.style.top=(top+GH+12)+'px'}
   else{h=Math.min((VH-92-dk-g)/2,(CW-(cols-1)*g)/cols);GW=cols*h+(cols-1)*g;GH=2*h+g;top=40+(VH-92-dk-GH)/2;lab.style.cssText='left:0;right:0;top:'+Math.max(8,top-34)+'px;text-align:center';mo.style.left=(cx-GW/2)+'px';mo.style.top=(top+GH+12)+'px'}
   w=h}
  st.style.height=Math.max(SH,VH)+'px';var cs=top+h+g/2,T=[];for(var r=0,k;r<2;r++){k=r?n-cols:Math.min(n,cols);for(var j=0;j<k;j++)T.push([(j-(k-1)/2)*(w+g),(r?1:-1)*(h+g)/2])}
