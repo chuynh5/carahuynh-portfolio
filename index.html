@@ -258,6 +258,13 @@ body.v-home .pc:nth-child(odd){scroll-snap-align:start;scroll-snap-stop:always;s
 .ag-plan b{display:block;font-weight:500;margin-bottom:2px}
 .ag-plan span{color:var(--mute);font-size:13.5px}
 @media(max-width:760px){.ag-plan{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:18px}.ag-plan:before{display:none}}
+#aboutpg{position:relative}#stk{position:absolute;inset:0;z-index:6;pointer-events:none}
+.stkr{position:absolute;width:clamp(58px,7vw,100px);pointer-events:auto;cursor:grab;touch-action:none;transform:rotate(var(--r,0deg));transition:transform .2s ease,filter .2s ease;filter:drop-shadow(0 3px 4px rgba(60,40,30,.18))}
+.stkr img{display:block;width:100%;height:auto;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;pointer-events:none}
+@media(hover:hover){.stkr:hover{transform:rotate(var(--r,0deg)) scale(1.06)}}
+.stkr.peel{cursor:grabbing;transform:rotate(0deg) scale(1.15) translateY(-4px);filter:drop-shadow(0 14px 14px rgba(60,40,30,.28));transition:transform .15s ease,filter .15s ease}
+.stk-reset{display:none;position:absolute;right:16px;top:14px;pointer-events:auto;background:none!important;border:0!important;border-radius:0!important;color:var(--mute)!important;padding:4px!important;margin:0!important;font-size:11px;cursor:pointer;text-decoration:underline}#stk.has .stk-reset{display:block}
+.stkr img{filter:drop-shadow(0 0 .6px #fffdf8) drop-shadow(0 0 .6px #fffdf8) drop-shadow(0 0 1.2px #fffdf8);image-rendering:auto}
 </style>
 </head>
 <body>
@@ -295,7 +302,7 @@ body.v-home .pc:nth-child(odd){scroll-snap-align:start;scroll-snap-stop:always;s
  <div class="px">work</div><h1 class="ph1">All work</h1>
  <div id="allRows"></div>
 </div></section></div>
-<div class="pg" id="aboutpg">
+<div class="pg" id="aboutpg"><div id="stk" aria-hidden="true"></div>
 <section id="profile"><div class="wrap"><div class="two"><div><div class="pic"><img data-k="me" alt="Cara on a riverside promenade with a city skyline behind her"></div><div class="now"><div class="nrow"><img data-k="cur_reading" alt="" aria-hidden="true"><div><i class="px">reading</i><span>Looking for my next read</span></div></div><div class="nrow"><img data-k="cur_learning" alt="" aria-hidden="true"><div><i class="px">learning</i><span>Engineering Management at Northeastern</span></div></div><div class="nrow"><img data-k="cur_listening" alt="" aria-hidden="true"><div><i class="px">listening to</i><span>CORTIS &amp; BTS</span></div></div><div class="nrow"><img data-k="cur_craving" alt="" aria-hidden="true"><div><i class="px">craving</i><span>Iced matcha</span></div></div></div></div>
   <div><h2>Cara 𐙚⋆°｡⋆♡</h2><p>A little more about me outside of design and product work.</p>
    <div class="note"><i class="px">i love to travel</i>Exploring new places is one of my favorite things, and I'm always planning the next trip.</div>
@@ -502,6 +509,18 @@ document.querySelectorAll('#art video[data-v]').forEach(function(v){if(!v.src)v.
    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(E).then(done,function(){prompt('Copy this email:',E)});else prompt('Copy this email:',E);return}
   if(!pop.contains(e.target))close()},true);
  addEventListener('keydown',function(e){if(e.key==='Escape')close()});addEventListener('scroll',close,{passive:true})})();
+
+(function(){var L=document.getElementById('stk');if(!L)return;var N=6,DEF=[[2,70],[29,52],[1,600],[34,660],[91,80],[92,470]],save={};
+ try{save=JSON.parse(localStorage.getItem('cara-stickers')||'{}')}catch(e){}
+ for(var i=1;i<=N;i++)(function(i){var d=document.createElement('div');d.className='stkr';var p=save[i]||{x:DEF[i-1][0],y:DEF[i-1][1],r:+(Math.random()*16-8).toFixed(1)};
+  d.style.left=p.x+'%';d.style.top=p.y+'px';d.style.setProperty('--r',p.r+'deg');
+  var im=new Image();im.alt='';im.draggable=false;im.onload=function(){L.appendChild(d);L.classList.add('has')};im.src='assets/sticker-'+i+'.png';d.appendChild(im);
+  var sx,sy,ox,oy,drag=false;
+  d.addEventListener('pointerdown',function(e){drag=true;try{d.setPointerCapture(e.pointerId)}catch(_){}sx=e.clientX;sy=e.clientY;ox=d.offsetLeft;oy=d.offsetTop;d.classList.add('peel');L.appendChild(d);e.preventDefault()});
+  d.addEventListener('pointermove',function(e){if(!drag)return;var W=L.clientWidth,H=L.clientHeight,nx=Math.min(Math.max(ox+e.clientX-sx,0),W-d.offsetWidth),ny=Math.min(Math.max(oy+e.clientY-sy,0),H-d.offsetHeight);d.style.left=(nx/W*100)+'%';d.style.top=ny+'px'});
+  function end(){if(!drag)return;drag=false;d.classList.remove('peel');var r=+(Math.random()*16-8).toFixed(1);d.style.setProperty('--r',r+'deg');save[i]={x:parseFloat(d.style.left),y:parseFloat(d.style.top),r:r};try{localStorage.setItem('cara-stickers',JSON.stringify(save))}catch(_){}}
+  d.addEventListener('pointerup',end);d.addEventListener('pointercancel',end)})(i);
+ var b=document.createElement('button');b.className='stk-reset px';b.type='button';b.textContent='reset stickers';b.onclick=function(){try{localStorage.removeItem('cara-stickers')}catch(_){}location.reload()};L.appendChild(b)})();
 </script>
 </body>
 </html>
